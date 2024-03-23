@@ -2,6 +2,7 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { useTheme } from 'native-base';
+import { useCart } from '../hooks/useCart';
 
 import { Cart } from '../screens/Cart';
 import { Home } from '../screens/Home';
@@ -11,6 +12,7 @@ const { Navigator, Screen } = createBottomTabNavigator();
 
 export function AppRoutes() {
   const { colors, sizes } = useTheme();
+  const { cart } = useCart()
 
   return (
     <Navigator
@@ -28,7 +30,7 @@ export function AppRoutes() {
         name="products"
         component={Home}
         options={{
-          tabBarIcon: ({ color }) => <Ionicons name="md-home-outline" color={color} size={sizes[6]} />
+          tabBarIcon: ({ color }) => <Ionicons name="md-home-outline" color={color} size={sizes[6]} />,
         }}
       />
 
@@ -37,6 +39,7 @@ export function AppRoutes() {
         component={Cart}
         options={{
           tabBarIcon: ({ color }) => <Feather name="shopping-bag" color={color} size={sizes[6]} />,
+          tabBarBadge: cart.length > 0 ? cart.length : undefined,
         }}
       />
 
